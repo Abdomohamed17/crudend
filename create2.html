@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+<title>create page</title>
+<meta name="description" content="training">
+<!-- <link href="boot.css" rel="stylesheet">  -->
+
+<!-- <link href="create.css" rel="stylesheet"> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>  
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>  -->
+
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    
+  }
+  
+body{
+  background-image: url(night.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@media  (max-width:1300px){
+body{background-position: 50%;}
+}
+
+@media (max-width:800px)  {
+ body .container{width:70%;height: 365px;}
+ .container  #inputs input{
+  margin-top: 10px;
+  padding: 10px;
+  font-weight:400;
+   }
+ .container  #inputs  #create , .container  #inputs #deleteAll{
+    margin-top: 10px ;
+      height: 40px;
+      /* font-size: larger; */
+      cursor: pointer;
+      font-weight:1400;
+      font-size: large;
+  }
+}
+
+@media (max-width:415px)  {
+  body .container{width:80%;
+    height: 280px;}
+ .container  #inputs input{
+      width:  89%;
+  margin-top: 5px;
+  padding: 6px;
+  font-weight:200;
+   }
+  .container  #inputs input::placeholder{
+    font-size: smaller;
+  }
+
+  .container  #inputs  #create , .container  #inputs #deleteAll{
+    margin-top: 5px ;
+    width: 100%;
+    height:30px;
+    font-weight:bold;
+    font-size: small;
+  }
+}
+  .container{
+    width: 40%;
+    background-color: rgba(95, 158, 160, 0.315);
+    height: 550px;
+    margin:auto;
+    position: relative;
+    border-radius: 30px;
+
+  }
+
+  .container2{   
+     width: 80%;
+     display: none;
+  }
+  
+  .container  #inputs{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  /* margin:auto ; */
+  position: absolute;
+  top:20px;
+  left: 25%;
+  /* transform: translate(30%,0); */
+  }
+  
+  #inputs input{margin-top: 20px;
+  height: 20px;
+  border-color: rgba(255, 255, 255, 0.623);
+  outline: 0;
+  border-radius: 10px;
+  transition: .5s;
+  padding: 20px;
+  background-color:   rgba(255, 255, 255, 0.623);
+  
+  color: #222;
+  font-weight:700;
+  caret-color: rgba(255, 255, 255, 0);
+  }
+  
+  input:focus{
+    transform: scale(1.1);
+  }
+  
+  input::placeholder{
+    color:#555
+  }
+  button{width:100%;
+    margin: auto;
+    /* margin-top: 20px ; */
+  height: 30px;
+  background-color:rgba(95, 158, 160, 0.315);
+  color: #fff;
+  text-transform: capitalize;
+  transition:1s;
+  border-radius: 10px;
+  cursor: pointer;
+  border-color: rgba(0, 0, 255, 0);
+  }
+  
+  #create , #deleteAll{
+    margin-top: 20px ;
+      height: 50px;
+      cursor: pointer;
+      font-weight:600;
+      font: 1em sans-serif;
+      font-size: larger;
+  }
+
+  #create:hover , #deleteAll:hover{
+    background-color:rgba(95, 158, 160, 0.712) ;
+    /* transform: scale(1.1); */
+    letter-spacing: 2px;
+  }
+
+  .ul{display: flex;
+    justify-content: center;
+  margin-top:30px;
+}
+
+.ul li{
+  margin-top: 5px;
+  opacity: 0;
+}
+.error ,
+.validationUser , 
+.validationPw ,
+.validationConfirm ,
+.validationEmail ,
+.validationEmailDOT{
+  color: #fff;list-style-type: none;
+}
+
+</style>
+</head>
+<body>
+<div class="ul">
+  <ul>
+    <li class="validationUser" > - Username must be at least 4 characters </li>
+    <li class="validationPw" > - The Password must be at least 8 characters </li>
+    <li class="error">  - Do not leave any input blank    </li>
+
+    <li class="validationConfirm" >  - must be pw matching for confirm</li>
+    <li class="validationEmail" > - The email must include the (@) and (.)sign. </li>
+     <!-- <li class="validationEmailDOT" > Make sure there is dot (.) sign  </li> -->
+  </ul>
+</div>
+    <div class="container">
+        <div id="inputs">
+      
+     
+     
+         
+      <input type="text" id="name" placeholder="user name" >
+
+      <input type="password" id="pw" placeholder="password"  >
+
+      <input type="password" id="confirm-pw" placeholder="confirm pw" > 
+
+      <input type="email" id="email" placeholder="email" required>
+      <button id="create" >create</button>
+      <button id="deleteAll" >deleteAll</button>
+     
+    </div> 
+    
+
+
+  </div>
+<script>
+
+let name = document.getElementById("name") ;
+let pw = document.getElementById("pw") ;
+let confirmpw = document.getElementById("confirm-pw") ;
+let email = document.getElementById("email") ;
+let create = document.getElementById("create") ;
+let deleteAlldata = document.getElementById("deleteAll") ;
+let validationUser = document.getElementsByClassName("validationUser")[0] ;
+let validationPw = document.getElementsByClassName("validationPw")[0] ;
+let validationConfirm = document.getElementsByClassName("validationConfirm")[0] ;
+let validationEmail = document.getElementsByClassName("validationEmail")[0] ;
+// let validationEmailDOT = document.getElementsByClassName("validationEmailDOT")[0] ;
+let error = document.getElementsByClassName("error")[0] ;
+let li = document.getElementsByTagName("li")[0] ;
+// let table2  = document.getElementsByClassName("table")[0] ;
+let inputs = document.getElementById("inputs") ;
+let users   ;
+let showdata = localStorage.getItem("showdata")
+
+create.style.caretColor = "rgba(255, 0, 0, 0)" 
+deleteAlldata.style.caretColor = "rgba(255, 0, 0, 0)" 
+if(localStorage.dataUsers != null){
+  users = JSON.parse(localStorage.dataUsers)
+}else{
+  users  = [] 
+}
+
+// Create New Account .
+create.onclick = function (){
+
+let count = 0 
+
+if(name.value.length < 4){
+  validationUser.style.color = "red";
+  validationUser.style.opacity = "1" ;
+  name.style.border = "solid red 2px";
+  count++ ; 
+}else {
+    validationUser.style.color = "#fff";
+    name.style.border = "none";
+    validationUser.style.opacity = "0" ;
+}
+
+if(pw.value.length<8){
+  validationPw.style.color = "red";
+  validationPw.style.opacity = "1" ;
+  pw.style.border = "solid red 2px";
+  count++ ; 
+}else {
+    validationPw.style.color = "#fff";
+    pw.style.border = "none";
+    validationPw.style.opacity = "0" ;
+}
+
+
+if (!name.value || !pw.value || !confirmpw.value || !email.value) {
+    error.style.color = "red";
+    error.style.opacity = "1" ;
+    count++;
+} else {
+    error.style.color = "#FFF";
+    error.style.opacity = "0" ;
+}
+
+
+if (pw.value !== confirmpw.value || confirmpw.value==="") {
+    validationConfirm.style.color = "red";
+    confirmpw.style.border = "solid red 2px";
+    validationConfirm.style.opacity = "1" ;
+    count++;
+} else {
+    validationConfirm.style.color = "#fff";
+    confirmpw.style.border = "none";
+    validationConfirm.style.opacity = "0" ;
+}
+
+
+if (!email.value.includes("@") || email.value.split('.').length > 2 || !email.value.includes(".")) {
+    validationEmail.style.color = "red";
+    email.style.border = "solid red 2px";
+    validationEmail.style.opacity = "1" ;
+    count++;
+
+} else {
+    validationEmail.style.color = "#fff";
+    email.style.border = "none";
+    validationEmail.style.opacity = "0" ;
+
+}
+
+if(count > 0)
+{   return 
+}
+
+// حل اخر للشروط السابقه 
+
+
+  // اذا كان ال username اصغر من 4 حروف نفذ الشرط ده 
+
+//  let isValid = true;
+
+// if (name.value.length < 4) {
+//     validationUser.style.color = "red";
+//     name.style.border = "solid red 2px";
+//     validationUser.style.opacity = "1" ;
+//     isValid = false;
+// } else {
+//     validationUser.style.color = "#fff";
+//     name.style.border = "none";
+//     validationUser.style.opacity = "0" ;
+
+// }
+
+// if (pw.value.length < 8) {
+//     validationPw.style.color = "red";
+//     pw.style.border = "solid red 2px";
+//     validationPw.style.opacity = "1" ;
+//     isValid = false;
+// } else {
+//     validationPw.style.color = "#fff";
+//     pw.style.border = "none";
+//     validationPw.style.opacity = "0" ;
+
+// }
+
+// if (!name.value || !pw.value || !confirmpw.value || !email.value) {
+//     error.style.color = "red";
+//     error.style.opacity = "1" ;
+
+//     isValid = false;
+// } else {
+//     error.style.color = "#FFF";
+//     error.style.opacity = "0" ;
+
+// }
+
+// if (pw.value !== confirmpw.value || !confirmpw.value) {
+//     validationConfirm.style.color = "red";
+//     confirmpw.style.border = "solid red 2px";
+//     validationConfirm.style.opacity = "1" ;
+
+//     isValid = false;
+// } else {
+//     validationConfirm.style.color = "#fff";
+//     confirmpw.style.border = "none";
+//     validationConfirm.style.opacity = "0" ;
+
+// }
+
+// if (!email.value.includes("@")|| 
+//      email.value.split('.').length > 2 ||
+//     !email.value.includes(".")) {
+//     validationEmail.style.color = "red";
+//     email.style.border = "solid red 2px";
+//     validationEmail.style.opacity = "1" ;
+//     isValid = false;
+// } else {
+//     validationEmail.style.color = "#fff";
+//     email.style.border = "none";
+//     validationEmail.style.opacity = "0" ;
+
+// }
+
+// if (!isValid) {
+//     // إذا كان أي شرط لم يتحقق، يمكنك تنفيذ الإجراءات المرتبطة بذلك هنا
+//     return;
+// }
+
+
+
+  let Data = {
+    userName : name.value , 
+    userPw : pw.value ,
+    confirmPw : confirmpw.value ,
+    emailUser : email.value 
+  }
+
+  // عدم احداث اي تغيير في الكود اذا كانت ال ايا من ال OBJECT فارغه 
+
+//   if(!Data.name || !Data.pw || !Data.confirm || !Data.email){
+// console.error("Do not leave any input blank")
+//          return ;
+//     }
+  
+  users.push(Data)
+  localStorage.setItem("dataUsers" , JSON.stringify(users)) ;
+  removeInputs() ;
+showdata ;
+    }
+
+
+//Remove Data From Inputs After Press Create .
+function removeInputs(){
+  name.value = "" ;
+  pw.value = "" ;
+  confirmpw.value = "" ;
+  email.value = ""
+}
+
+
+//Clear All Data From Local & Array 
+deleteAlldata.onclick=function clearAll(){
+  users.splice(0) ; 
+  localStorage.removeItem("dataUsers")
+}
+
+
+
+
+</script>
+
+
+</body>
+</html>
+ 
